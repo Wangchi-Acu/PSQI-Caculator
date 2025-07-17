@@ -48,7 +48,7 @@ def calculate_psqi(data):
 
 # ---------- Streamlit 界面 ----------
 st.set_page_config(page_title="匹兹堡睡眠质量指数(PSQI)", layout="centered")
-st.title("匹兹堡睡眠质量指数（PSQI）在线问卷")
+st.title("江苏省中医院针灸科失眠专病门诊匹兹堡睡眠质量指数（PSQI）在线问卷")
 st.markdown("> 请根据 **最近一个月** 的实际情况填写")
 
 with st.form("psqi_form"):
