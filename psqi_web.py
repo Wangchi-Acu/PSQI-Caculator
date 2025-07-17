@@ -158,7 +158,15 @@ if submitted:
     st.dataframe(score_df, use_container_width=True)
 
     # 条形图
-    chart = st.bar_chart(score_df.set_index("成分")["得分"])
+    import altair as alt
+
+    score_df["颜色"] = ["#FF595E","#FFCA3A","#8AC926","#1982C4","#6A4C93","#FF924C","#52A675"]
+    chart = alt.Chart(score_df).mark_bar().encode(
+        x="成分",
+        y="得分",
+        color=alt.Color("成分", scale=alt.Scale(domain=score_df["成分"], range=score_df["颜色"]))
+    ).properties(height=350)
+    st.altair_chart(chart, use_container_width=True)
 
     # 总分与解读
     level = "很好" if res["total"] <= 5 else \
