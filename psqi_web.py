@@ -100,16 +100,32 @@ if submitted:
     }
     res = calculate_psqi(data)
 
-    # 写 csv
-    csv_path = os.path.join(os.path.dirname(__file__), "psqi_results.csv")
+        # ---------- 生成目录 & 文件名 ----------
+    save_dir = r"F:\10量表结果"
+    os.makedirs(save_dir, exist_ok=True)                       # 若目录不存在则创建
+    now_str = datetime.now().strftime("%Y%m%d_%H%M")           # 年月日_时分
+    safe_name = "".join(c for c in name if c.isalnum() or c in (" ", "_", "-")).rstrip()
+    csv_name = f"{now_str}_{safe_name}.csv"
+    csv_path = os.path.join(save_dir, csv_name)
+
+    # ---------- 写本地文件 ----------
     head = ["姓名","年龄","身高","体重","联系方式","上床时间","起床时间","入睡选项","睡眠选项",
             "q5a","q5b","q5c","q5d","q5e","q5f","q5g","q5h","q5i","q5j","q6","q7","q8","q9",
             "A","B","C","D","E","F","G","总分","效率%"]
     row = [data[k] for k in ["name","age","height","weight","contact","bed_time","sleep_latency_choice","getup_time","sleep_duration_choice",
                              "q5a","q5b","q5c","q5d","q5e","q5f","q5g","q5h","q5i","q5j","q6","q7","q8","q9"]] \
           + [res[k] for k in ["A","B","C","D","E","F","G","total"]] + [f"{res['eff']:.1f}"]
-    pd.DataFrame([row], columns=head).to_csv(csv_path, mode='a', header=not os.path.exists(csv_path), index=False, encoding='utf-8-sig')
+    pd.DataFrame([row], columns=head).to_csv(csv_path, index=False, encoding='utf-8-sig')
 
-    st.success("提交成功！结果已保存到 `psqi_results.csv`")
+    # ---------- 网页下载按钮 ----------
+    with open(csv_path, "rb") as f:
+        st.download_button(
+            label="📥 下载本次结果 (CSV)",
+            data=f,
+            file_name=csv_name,
+            mime="text/csv"
+        )
+
+    st.success("提交成功！结果已保存到 `F:\10量表结果`")
     st.info(f"PSQI 总分：{res['total']} 分，睡眠质量：{'很好' if res['total']<=5 else '尚可' if res['total']<=10 else '一般' if res['total']<=15 else '很差'}")
 
