@@ -67,8 +67,14 @@ with st.form("psqi_form"):
     bed   = st.text_input("晚上上床时间 (HH:MM)", value="23:30")
     getup = st.text_input("早上起床时间 (HH:MM)", value="07:00")
     latency = st.selectbox("入睡所需时间", ["≤15分钟","16-30分钟","31-60分钟","≥60分钟"], index=1)
-    duration = st.selectbox("实际睡眠小时数", [">7小时","6-7小时","5-6小时","<5小时"], index=1)
-
+    duration = st.number_input(
+    "实际睡眠小时数（保留 1 位小数）",
+    min_value=0.0,
+    max_value=24.0,
+    value=6.5,                 # 默认值
+    step=0.1,
+    format="%.1f"
+)
     st.subheader("③ 睡眠问题（每周发生频率）")
     opts = ["没有","少于1次","1-2次","3次以上"]
     q5a = st.selectbox("a. 入睡困难", opts, index=0)
@@ -89,13 +95,22 @@ with st.form("psqi_form"):
     q9 = st.selectbox("精力不足", ["没有","少于1次","1-2次","3次以上"], index=0)
 
     submitted = st.form_submit_button("提交问卷")
-
+    
+if duration > 7:
+    sd_choice = 1
+elif 6 <= duration <= 7:
+    sd_choice = 2
+elif 5 <= duration < 6:
+    sd_choice = 3
+else:
+    sd_choice = 4
+    
 if submitted:
     data = {
         "name":name, "age":age, "height":height, "weight":weight, "contact":contact,
         "bed_time":bed, "getup_time":getup,
         "sleep_latency_choice":["≤15分钟","16-30分钟","31-60分钟","≥60分钟"].index(latency)+1,
-        "sleep_duration_choice":[">7小时","6-7小时","5-6小时","<5小时"].index(duration)+1,
+        "sleep_duration_choice": sd_choice,
         "q5a":opts.index(q5a)+1,"q5b":opts.index(q5b)+1,"q5c":opts.index(q5c)+1,
         "q5d":opts.index(q5d)+1,"q5e":opts.index(q5e)+1,"q5f":opts.index(q5f)+1,
         "q5g":opts.index(q5g)+1,"q5h":opts.index(q5h)+1,"q5i":opts.index(q5i)+1,
