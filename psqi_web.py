@@ -120,7 +120,7 @@ if submitted:
     res = calculate_psqi(data)
 
         # ---------- 生成目录 & 文件名 ----------
-    save_dir = r"F:\10量表结果"
+    save_dir = r"F:\网页量表结果"
     os.makedirs(save_dir, exist_ok=True)                       # 若目录不存在则创建
     now_str = datetime.now().strftime("%Y%m%d_%H%M")           # 年月日_时分
     safe_name = "".join(c for c in name if c.isalnum() or c in (" ", "_", "-")).rstrip()
