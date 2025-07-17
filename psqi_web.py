@@ -64,11 +64,11 @@ with st.form("psqi_form"):
     contact= st.text_input("联系方式")
 
     st.subheader("② 睡眠习惯")
-    bed   = st.text_input("晚上上床时间 (HH:MM)", value="23:30")
-    getup = st.text_input("早上起床时间 (HH:MM)", value="07:00")
-    latency = st.selectbox("入睡所需时间", ["≤15分钟","16-30分钟","31-60分钟","≥60分钟"], index=1)
+    bed   = st.text_input("1.晚上上床时间 (HH:MM)", value="23:30")
+    getup = st.text_input("2.早上起床时间 (HH:MM)", value="07:00")
+    latency = st.selectbox("3.入睡所需时间", ["≤15分钟","16-30分钟","31-60分钟","≥60分钟"], index=1)
     duration = st.number_input(
-    "实际睡眠小时数（保留 1 位小数）",
+    "4.实际睡眠时长（小时）",
     min_value=0.0,
     max_value=24.0,
     value=6.5,                 # 默认值
@@ -77,22 +77,22 @@ with st.form("psqi_form"):
 )
     st.subheader("③ 睡眠问题（每周发生频率）")
     opts = ["没有","少于1次","1-2次","3次以上"]
-    q5a = st.selectbox("a. 入睡困难", opts, index=0)
-    q5b = st.selectbox("b. 夜间易醒或早醒", opts, index=0)
-    q5c = st.selectbox("c. 夜间去厕所", opts, index=0)
-    q5d = st.selectbox("d. 呼吸不畅", opts, index=0)
-    q5e = st.selectbox("e. 咳嗽或鼾声高", opts, index=0)
-    q5f = st.selectbox("f. 感觉冷", opts, index=0)
-    q5g = st.selectbox("g. 感觉热", opts, index=0)
-    q5h = st.selectbox("h. 做恶梦", opts, index=0)
-    q5i = st.selectbox("i. 疼痛不适", opts, index=0)
-    q5j = st.selectbox("j. 其他影响", opts, index=0)
+    q5a = st.selectbox("5a. 入睡困难", opts, index=0)
+    q5b = st.selectbox("5b. 夜间易醒或早醒", opts, index=0)
+    q5c = st.selectbox("5c. 夜间去厕所", opts, index=0)
+    q5d = st.selectbox("5d. 呼吸不畅", opts, index=0)
+    q5e = st.selectbox("5e. 咳嗽或鼾声高", opts, index=0)
+    q5f = st.selectbox("5f. 感觉冷", opts, index=0)
+    q5g = st.selectbox("5g. 感觉热", opts, index=0)
+    q5h = st.selectbox("5h. 做恶梦", opts, index=0)
+    q5i = st.selectbox("5i. 疼痛不适", opts, index=0)
+    q5j = st.selectbox("5j. 其他影响", opts, index=0)
 
     st.subheader("④ 其他")
-    q6 = st.selectbox("总体睡眠质量", ["很好","较好","较差","很差"], index=1)
-    q7 = st.selectbox("使用催眠药物", ["没有","少于1次","1-2次","3次以上"], index=0)
-    q8 = st.selectbox("白天困倦", ["没有","少于1次","1-2次","3次以上"], index=0)
-    q9 = st.selectbox("精力不足", ["没有","少于1次","1-2次","3次以上"], index=0)
+    q6 = st.selectbox("6.总体睡眠质量", ["很好","较好","较差","很差"], index=1)
+    q7 = st.selectbox("7.使用催眠药物（每周发生频率）", ["没有","少于1次","1-2次","3次以上"], index=0)
+    q8 = st.selectbox("8.白天困倦（每周发生频率）", ["没有","少于1次","1-2次","3次以上"], index=0)
+    q9 = st.selectbox("9.精力不足（每周发生频率）", ["没有","少于1次","1-2次","3次以上"], index=0)
 
     submitted = st.form_submit_button("提交问卷")
     
