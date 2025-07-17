@@ -126,6 +126,24 @@ if submitted:
             mime="text/csv"
         )
 
-    st.success("提交成功！结果已保存到 `F:\10量表结果`")
-    st.info(f"PSQI 总分：{res['total']} 分，睡眠质量：{'很好' if res['total']<=5 else '尚可' if res['total']<=10 else '一般' if res['total']<=15 else '很差'}")
+        st.success("提交成功！结果已保存到本地，并可下载 CSV")
+    # -------------------- 详细得分展示 --------------------
+    st.subheader("📊 各成分得分")
+    score_df = pd.DataFrame({
+        "成分": ["A 睡眠质量", "B 入睡时间", "C 睡眠时间",
+                 "D 睡眠效率", "E 睡眠障碍", "F 催眠药物", "G 日间功能"],
+        "得分": [res["A"], res["B"], res["C"],
+                 res["D"], res["E"], res["F"], res["G"]]
+    })
+    # 表格
+    st.dataframe(score_df, use_container_width=True)
 
+    # 条形图
+    chart = st.bar_chart(score_df.set_index("成分")["得分"])
+
+    # 总分与解读
+    level = "很好" if res["total"] <= 5 else \
+            "尚可" if res["total"] <= 10 else \
+            "一般" if res["total"] <= 15 else "很差"
+    st.metric("🎯 PSQI 总分", f"{res['total']} 分", delta=None)
+    st.info(f"综合评定：睡眠质量 **{level}**")
